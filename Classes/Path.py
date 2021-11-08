@@ -16,6 +16,7 @@ DatasetDir="data//wiki_movie_plots_deduped.csv"
 
 # DB dir
 DatabaseDir="data//wiki_movie_database.db"
+PlotDatabaseDir="data//wiki_plot_database.db"
 
 # address of stopword list.
 StopwordDir="data//stopword.txt"
