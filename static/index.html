@@ -11,10 +11,10 @@
 
   
   </head>
-  <body>
+  <body class="container">
 
     <div class="row">
-      <img src="https://cdn.glitch.com/1ff6ab81-7c2d-498e-ba4f-243810006748%2Flogo.jpg?v=1613148479887" alt="logo">
+      <img src="assets/logo.jpg" alt="logo">
      <div class="header-right">
        <ul>
        <li><a class="active" href="index.html"> Home </a></li>
@@ -24,27 +24,34 @@
        </ul>
      </div>
    </div>
-	<div class="row">
-		<div class="col-3 filter_area d-flex search_area justify-content-center">
+	<div class="row upper_page">
+		<div class="col-4 filter_area d-flex search_area justify-content-center">
 			<div class="button_area btn-group-toggle" data-toggle="buttons">
 				<h3> Filters</h3>
-				<label class="btn btn-primary active">
-					<input type="checkbox" checked autocomplete="off"> Horror
-					<input type="checkbox" checked autocomplete="off"> Action
-					<input type="checkbox" checked autocomplete="off"> Romance
-					<input type="checkbox" checked autocomplete="off"> Science Fiction
-					<input type="checkbox" checked autocomplete="off"> Sports
-  				</label>
+				<div class="row filter_btn">
+					<button class="btn"> Horror </button>
+				</div>
+				<div class="row filter_btn">
+					<button class="btn"> Romance </button>
+				</div>
+				<div class="row filter_btn">
+					<button class="btn"> Comedy </button>
+				</div>
+				<div class="row filter_btn">
+					<button class="btn"> Science Fiction </button>
+				</div>
 			</div>
 		</div>
 		<div class="col-8 d-flex search_area justify-content-center">
-			<div>
-				<h4> Search A Film</h4>
-				<input type="text">
-			</div>
-			<div class="results_area">
-				<div class="">
-					<h6></h6>
+			<div class="flex-column">
+				<h4 class="d-flex justify-content-center"> Search For a Film</h4>
+				<div>
+					<input type="text" id="query_field">
+					<button class="btn" onclick="search()"> Search</button>
+				</div>
+				<br/>
+				<div class="results_area" id="results_disp">
+
 				</div>
 			</div>
 		</div>

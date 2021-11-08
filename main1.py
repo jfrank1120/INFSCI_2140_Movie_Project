@@ -1,4 +1,5 @@
-from flask import Flask, redirect
+from flask import Flask, redirect, Response
+from main_actions import search
 
 
 import datetime
@@ -11,6 +12,10 @@ app = Flask(__name__)
 def root():
     return redirect("/static/index.html", code=302)
 
+@app.route('/search', methods=['POST'])
+def query():
+    data = search()
+    return Response(json.dumps(data), mimetype='application/json')
 
 # startTime = datetime.datetime.now()
 # PreProcess("trecweb")

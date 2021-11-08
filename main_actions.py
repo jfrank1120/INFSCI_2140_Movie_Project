@@ -84,6 +84,7 @@ def ReadIndex(type, token):
             print(docNo+"\t"+str(docId)+"\t"+str(posting[docId]))
 
 def search():
+    return_data = []
     index = MyIndexReader.MyIndexReader("wiki")
     search = QueryRetreivalModel.QueryRetrievalModel(index)
     extractor = ExtractQuery.ExtractQuery()
@@ -95,9 +96,11 @@ def search():
         for result in results:
             # u_result = u' '.join((str(rank), result.getDocTitle())).decode('utf-8').strip()
             title = result.getDocTitle()#.decode('utf-8')
+            return_data.append(f"{rank} , {title}")
             print(rank,title) #.encode('ascii', 'ignore'))
             # print(rank,result.getDocTitle(),' ',result.getScore())
             rank += 1
+    return return_data
 
 startTime = datetime.datetime.now()
 # PreProcess()

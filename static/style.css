@@ -1,10 +1,10 @@
 /*CSS Document*/
 body{
-    background-color: gray;
+    background-color: #9fa6b3;
 }
 .header {
     position:fixed;
-    background-color: gray;
+    background-color: #9fa6b3;
     padding: 20px 10px;
     min-width: 100vw;
     z-index: 1;
@@ -101,5 +101,20 @@ footer{
   color: white;
  }
 
+.filter_btn {
+    padding: 5%;
+}
+
+.upper_page {
+    margin-bottom: 5%;
+    border-style: solid;
+    border-color: #2692ab;
+    border-width: 5px;
+    border-radius: 5px;
+}
+
+.filter_area {
+    border-right: solid #2692ab 5px;
+}
   
    
