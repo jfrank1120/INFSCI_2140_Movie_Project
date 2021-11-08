@@ -102,9 +102,10 @@ function populate_results(results_data) {
         var res = document.createElement("div");
         res.className = "result";
         var res_text = document.createElement("H5");
-        var title = results_data[i].split(',')
-        title = title[1].substring(1)
-        res_text.innerText = title;
+        //var title = results_data[i].split(',')
+        //title = title[1].substring(1)
+        var title_ex = results_data[i].replace(',', ':')
+        res_text.innerText = title_ex;
         res.appendChild(res_text);
         results_area.appendChild(res);
     }

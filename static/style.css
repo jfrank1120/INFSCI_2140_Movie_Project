@@ -118,4 +118,7 @@ footer{
     border-right: solid #2692ab 5px;
 }
   
-   
+.filter_label {
+    font-weight: bold;
+    font-size: 100%;
+}
