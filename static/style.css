@@ -1,0 +1,124 @@
+/*CSS Document*/
+body{
+    background-color: #9fa6b3;
+}
+.header {
+    position:fixed;
+    background-color: #9fa6b3;
+    padding: 20px 10px;
+    min-width: 100vw;
+    z-index: 1;
+    top: 0;
+  }
+  .mytitle{
+    transform: translateY(-50%);
+	  display: block;
+    position: relative;
+    top: 25%;
+    left:10%;
+    text-transform: uppercase;
+    color: white;
+    font-size: 60px;
+    white-space: nowrap;
+    transition: 0.6s;
+    font-family: aharoni, Cambria, "Hoefler Text", "Liberation Serif", "Times New Roman", "serif";
+  }
+  a{
+      text-decoration: none;
+      color: white;
+  }
+.movie-img-container {
+  display: inline-block;
+  position: relative;
+  float: left;
+  height: 125px;
+  width: 90px;
+  overflow: hidden;
+  margin: 0px 30px;
+  border-radius: 10px;
+}
+footer{
+	position: relative;
+	bottom: 0;
+	overflow: hidden;
+  }
+@media (max-width: 880px) {
+ .footer-distributed{
+		font: bold 14px sans-serif;
+	}
+  .footer-distributed .footer-left,
+	.footer-distributed .footer-center,
+	.footer-distributed .footer-right{
+		display: block;
+		width: 100%;
+		margin-bottom: 40px;
+		text-align: center;
+	}
+ .footer-distributed .footer-center i{
+		margin-left: 0;
+	}
+	.main {
+		line-height: normal;
+		font-size: 30px;
+	}
+ }
+ .fb {
+  margin-bottom: 5px;
+  padding: 20px;
+  font-size: 40px;
+  font-family: roboto,Constantia, "Lucida Bright", "DejaVu Serif", Georgia, "serif";
+  text-align: center;
+  width: 85%;
+  text-decoration: none;
+  border-spacing: 2px;
+  border-radius:10px;
+ }
+ .fb:hover {
+  opacity: 0.9;
+ }
+ .fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+.fa-instagram {
+  background: #F13400;
+  color: white;
+}
+ .fa-pinterest {
+  background: #FF0004;
+  color: white;
+ }
+ .fa-tumblr {
+  background: #03033E;
+  color: white;
+ }
+ .fa-linkedin {
+  background: #0A52D0;
+  color: white;
+ }
+
+.filter_btn {
+    padding: 5%;
+}
+
+.upper_page {
+    margin-bottom: 5%;
+    margin-top: 5%;
+    border-style: solid;
+    border-color: #2692ab;
+    border-width: 5px;
+    border-radius: 5px;
+}
+
+.filter_area {
+    border-right: solid #2692ab 5px;
+}
+  
+.filter_label {
+    font-weight: bold;
+    font-size: 100%;
+}
