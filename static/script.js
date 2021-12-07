@@ -124,7 +124,7 @@ function checkform(){
 		return false;
 	}
 	else if (!email.match(mailformat)){
-		alert("Entered email address is invalid!");
+		alert("Entered email address is not valid!");
 		return false;
 	}
 	else if(message.length<20){
@@ -139,7 +139,7 @@ function checkform(){
 function validate()
 {
 	//get the values
-	var name = document.getElementById("mname").value;
+	var name = document.getElementById("name").value;
 	var year = document.getElementById("year").value;
 	var genre = document.getElementById("genre").value;
 	var description = document.getElementById("description").value;
