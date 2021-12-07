@@ -2,7 +2,7 @@
 
 ## How to run the project
 1. `pip install -r requirements.txt` </br>
-2. `python main1.py` </br>
+2.  Run `python main1.py` </br>
 3. Then go to http://127.0.0.1:8080
 
 
