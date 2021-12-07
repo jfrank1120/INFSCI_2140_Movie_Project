@@ -34,7 +34,7 @@ body{
   height: 125px;
   width: 90px;
   overflow: hidden;
-  margin: 0px 30px;
+  margin: 0px 40px;
   border-radius: 10px;
 }
 footer{
@@ -51,7 +51,7 @@ footer{
 	.footer-distributed .footer-right{
 		display: block;
 		width: 100%;
-		margin-bottom: 40px;
+		margin-bottom: 50px;
 		text-align: center;
 	}
  .footer-distributed .footer-center i{
@@ -59,7 +59,7 @@ footer{
 	}
 	.main {
 		line-height: normal;
-		font-size: 30px;
+		font-size: 40px;
 	}
  }
  .fb {
