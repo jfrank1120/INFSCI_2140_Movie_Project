@@ -1,11 +1,12 @@
 import flask
 from flask import Flask, redirect, Response
-from main_actions import search
+from main_actions import SearchforMovie
 
 import json
 
 
 app = Flask(__name__)
+dummyClass = SearchforMovie()
 
 @app.route('/')
 def root():
@@ -14,11 +15,16 @@ def root():
 @app.route('/search', methods=['POST'])
 def query():
     # Pull query from front-end
-    search_query = flask.Request.form['query']
+    # search_query = flask.Request.form['query']
     # Pull filters from front-end
-    filters = flask.Request.form['filters']
-    data = search()
-    return Response(json.dumps(data), mimetype='application/json')
+    # filters = flask.Request.form['filters']
+    
+
+    # data = search()
+    dummyClass.set_query("city action jump")
+    result = dummyClass.retrieve(topK=10)
+    
+    return Response(json.dumps(result), mimetype='application/json')
 
 
 if __name__ == '__main__':
