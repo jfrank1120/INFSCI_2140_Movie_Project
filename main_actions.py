@@ -10,7 +10,11 @@ import PreProcessData.WordTokenizer as WordTokenizer
 import Classes.Path as Path
 import datetime
 from Classes.Query import Query as Query
+from Classes.Document import Document as Document
+
 # from main1 import query
+import sqlalchemy as db
+import Classes.Path as Path
 
 
 def PreProcess():
@@ -64,7 +68,7 @@ def WriteIndex(type):
         doc = corpus.nextDocument()
         if doc == None:
             break
-        indexWriter.index(doc[0], doc[1], doc[2])
+        indexWriter.index(doc)
         count+=1
         if count%10000==0:
             print("finish ", count," docs")
@@ -111,6 +115,16 @@ class SearchforMovie():
         self.extractor = ExtractQuery.ExtractQuery()
         self.query = None
         self.result = None
+        self.engine = db.create_engine('sqlite:///'+ Path.DatabaseDir)
+        self.connection = self.engine.connect()
+        metadata = db.MetaData()
+        # self.table = db.select([table])
+        self.movies = db.Table('table', metadata, autoload=True, autoload_with=self.engine)
+
+        # query = db.select([self.movies.columns.index, self.movies.columns.Title, self.movies.columns.Plot])
+        # self.ResultProxy = self.connection.execute(query)
+        
+
     def set_query(self, value):
         """
         Expects a string separated by space
@@ -118,6 +132,26 @@ class SearchforMovie():
         q = Query()
         q.setQueryContent(value)
         self.query = q
+    
+    def populateAttributes(self, docTitle):
+        """
+        Given a string as movie title, return a Document object,
+        with all the attributes in the dataset
+        """
+
+        doc = Document()
+        q = db.select([self.movies]).where(self.movies.columns.Title == docTitle)
+        result = self.connection.execute(q).fetchall()
+        doc.setDocNo(result[0][0])
+        doc.setDocYear(result[0][1])
+        doc.setDocTitle(result[0][2])
+        doc.setDocOrigin(result[0][3])
+        doc.setDocDirector(result[0][4])
+        doc.setDocCast(result[0][5])
+        doc.setDocGenre(result[0][6])
+        doc.setDocLink(result[0][7])
+        doc.setDocPlot(result[0][8])
+        return doc
 
     def retrieve(self, topK, query=None):
         """
@@ -133,7 +167,17 @@ class SearchforMovie():
         for k in result:
             movie_list.append(k.getDocTitle())
         
-        self.result = movie_list
+        self.result = result
+        return movie_list
+    
+    def get_similar(self, moviename):
+        # movie_list = self.retrieve(20, query=moviename)
+        movie_list = []
+        q = Query()
+        q.setQueryContent(moviename)
+        result = self.search.retrieveQuery(q, 10)
+        for k in result:
+            movie_list.append(k.getDocTitle())
         return movie_list
 
 
@@ -141,7 +185,11 @@ if __name__ == "__main__":
     dummyClass = SearchforMovie()
     dummyClass.set_query("city action jump")
     result = dummyClass.retrieve(topK=10)
-    print(result)
+    doc = dummyClass.populateAttributes(result[5])
+    print(doc)
+    similar_movies = dummyClass.get_similar("Woman in Green")
+    print(similar_movies)
+
 # """
 # startTime = datetime.datetime.now()
 # # PreProcess()
