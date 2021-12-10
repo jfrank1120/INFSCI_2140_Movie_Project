@@ -14,4 +14,6 @@ class PreprocessedCorpusReader:
             return
         docNo, title = val.split("__#__")
         content=self.corpus.readline().strip()
-        return [docNo, title, content]
+        return {'docNo' : docNo,
+                'title' : title,
+                'content' : content}
