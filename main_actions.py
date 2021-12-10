@@ -9,6 +9,8 @@ import PreProcessData.WordNormalizer as WordNormalizer
 import PreProcessData.WordTokenizer as WordTokenizer
 import Classes.Path as Path
 import datetime
+from Classes.Query import Query as Query
+# from main1 import query
 
 
 def PreProcess():
@@ -83,30 +85,68 @@ def ReadIndex(type, token):
             docNo = index.getDocNo(docId)
             print(docNo+"\t"+str(docId)+"\t"+str(posting[docId]))
 
-def search():
-    return_data = []
-    index = MyIndexReader.MyIndexReader("wiki")
-    search = QueryRetreivalModel.QueryRetrievalModel(index)
-    extractor = ExtractQuery.ExtractQuery()
-    queries= extractor.getQuries()
-    for query in queries:
-        print(query.topicId,"\t",query.queryContent)
-        results = search.retrieveQuery(query, 20)
-        rank = 1
-        for result in results:
-            # u_result = u' '.join((str(rank), result.getDocTitle())).decode('utf-8').strip()
-            title = result.getDocTitle()#.decode('utf-8')
-            return_data.append(f"{rank} , {title}")
-            print(rank,title) #.encode('ascii', 'ignore'))
-            # print(rank,result.getDocTitle(),' ',result.getScore())
-            rank += 1
-    return return_data
+# def search():
+#     return_data = []
+#     index = MyIndexReader.MyIndexReader("wiki")
+#     search = QueryRetreivalModel.QueryRetrievalModel(index)
+#     extractor = ExtractQuery.ExtractQuery()
+#     queries= extractor.getQuries()
+#     for query in queries:
+#         print(query.topicId,"\t",query.queryContent)
+#         results = search.retrieveQuery(query, 20)
+#         rank = 1
+#         for result in results:
+#             # u_result = u' '.join((str(rank), result.getDocTitle())).decode('utf-8').strip()
+#             title = result.getDocTitle()#.decode('utf-8')
+#             return_data.append(f"{rank} , {title}")
+#             print(rank,title) #.encode('ascii', 'ignore'))
+#             # print(rank,result.getDocTitle(),' ',result.getScore())
+#             rank += 1
+#     return return_data
 
-"""
-startTime = datetime.datetime.now()
-# PreProcess()
-# WriteIndex('wiki')
-search()
-endTime = datetime.datetime.now()
-print ("index text corpus running time: ", endTime - startTime)
-"""
+class SearchforMovie():
+    def __init__(self):
+        self.index = MyIndexReader.MyIndexReader("wiki")
+        self.search = QueryRetreivalModel.QueryRetrievalModel(self.index)
+        self.extractor = ExtractQuery.ExtractQuery()
+        self.query = None
+        self.result = None
+    def set_query(self, value):
+        """
+        Expects a string separated by space
+        """
+        q = Query()
+        q.setQueryContent(value)
+        self.query = q
+
+    def retrieve(self, topK, query=None):
+        """
+        Retrieves topK results from movie dataset.
+        Arguments
+        topK : integer, number of movie names to retrieve
+        query : If self.query is None, use this query
+        """
+        movie_list = []
+        if self.query == None:
+            self.query = self.set_query(query)
+        result = self.search.retrieveQuery(self.query, topK)
+        for k in result:
+            movie_list.append(k.getDocTitle())
+        
+        self.result = movie_list
+        return movie_list
+
+
+if __name__ == "__main__":
+    dummyClass = SearchforMovie()
+    dummyClass.set_query("city action jump")
+    result = dummyClass.retrieve(topK=10)
+    print(result)
+# """
+# startTime = datetime.datetime.now()
+# # PreProcess()
+# # WriteIndex('wiki')
+# search()
+# endTime = datetime.datetime.now()
+# print ("index text corpus running time: ", endTime - startTime)
+# """
