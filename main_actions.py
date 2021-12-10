@@ -102,9 +102,11 @@ def search():
             rank += 1
     return return_data
 
+"""
 startTime = datetime.datetime.now()
 # PreProcess()
 # WriteIndex('wiki')
 search()
 endTime = datetime.datetime.now()
 print ("index text corpus running time: ", endTime - startTime)
+"""

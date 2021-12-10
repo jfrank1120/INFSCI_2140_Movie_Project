@@ -87,9 +87,17 @@ function fake_callback() {}
 
 function search() {
     var query = document.getElementById('query_field').value;
+    var buttons = document.getElementsByTagName('input');
+    var filters = {};
+    for (var ind = 0; ind < buttons.length; ind++) {
+        if (buttons[ind].type == "checkbox") {
+            filters[buttons[ind].id] = buttons[ind].checked
+        }
+    }
     console.log('Searching for : ' + query)
     var json_data = {
-                       'query' : query
+                       'query' : query,
+                       'filters' : filters
     };
     sendJsonRequest(json_data, '/search', populate_results)
 }
