@@ -11,11 +11,15 @@ import Classes.Path as Path
 import datetime
 from Classes.Query import Query as Query
 from Classes.Document import Document as Document
+import random
 
 # from main1 import query
 import sqlalchemy as db
 import Classes.Path as Path
+import itertools
 
+DEFAULT_NUM_MOVIES = 10
+DEFAULT_NUM_KEYWORDS = 11
 
 def PreProcess():
     # Open the collection by type.
@@ -115,6 +119,8 @@ class SearchforMovie():
         self.extractor = ExtractQuery.ExtractQuery()
         self.query = None
         self.result = None
+        self.result_by_origin = None
+        self.result_by_year = None
         self.engine = db.create_engine('sqlite:///'+ Path.DatabaseDir)
         self.connection = self.engine.connect()
         metadata = db.MetaData()
@@ -168,27 +174,68 @@ class SearchforMovie():
             movie_list.append(k.getDocTitle())
         
         self.result = result
+        # self._create_results_by_origin()
+        # self._create_results_by_year()
+        
         return movie_list
     
     def get_similar(self, moviename):
         # movie_list = self.retrieve(20, query=moviename)
         movie_list = []
         q = Query()
-        q.setQueryContent(moviename)
-        result = self.search.retrieveQuery(q, 10)
+        content = db.select([self.movies.columns.Plot]).where(self.movies.columns.Title == moviename)
+        text = self.connection.execute(content).fetchall()[0]
+        # print(text[0])
+        keywords = random.sample(text[0].split(' '), DEFAULT_NUM_KEYWORDS)
+        q.setQueryContent(' '.join(keywords))
+        result = self.search.retrieveQuery(q, DEFAULT_NUM_MOVIES)
         for k in result:
             movie_list.append(k.getDocTitle())
         return movie_list
 
+    def filter_results_by_origin(self, movie_list, origin):
+        self.result_by_origin = {}
+        q = db.select([self.movies.columns.Title], self.movies.columns.Title.in_(movie_list)).where(getattr(self.movies.columns, 'Origin/Ethnicity') == origin)
+        result = self.connection.execute(q).fetchall()
+        return [f[0] for f in result]
+
+    def filter_results_by_year(self, movie_list, year):
+        self.result_by_origin = {}
+        q = db.select([self.movies.columns.Title], self.movies.columns.Title.in_(movie_list)).where(getattr(self.movies.columns, 'ReleaseYear') > year)
+        result = self.connection.execute(q).fetchall()
+        return [f[0] for f in result]
+
+    def get_recommendation_by_past_search(self, movie_list):
+        # print(' '.join(movie_list))
+        
+        q = db.select([self.movies.columns.Plot], self.movies.columns.Title.in_(movie_list))
+        result = self.connection.execute(q).fetchall()
+        all_words = ' '.join([f[0] for f in result]).split(" ")
+        keywords = random.sample(all_words, DEFAULT_NUM_KEYWORDS)
+        # keywords = random.sample(text[0].split(' '), 10)
+        query = Query()
+        query.setQueryContent(' '.join(keywords))
+        titles = [k.getDocTitle() for k in self.search.retrieveQuery(query, DEFAULT_NUM_MOVIES)]
+        return titles
+
+        
 
 if __name__ == "__main__":
     dummyClass = SearchforMovie()
     dummyClass.set_query("city action jump")
     result = dummyClass.retrieve(topK=10)
+    print(result)
     doc = dummyClass.populateAttributes(result[5])
-    print(doc)
-    similar_movies = dummyClass.get_similar("Woman in Green")
+    print("Finding similar movies : ", result[4])
+    similar_movies = dummyClass.get_similar(result[4])
     print(similar_movies)
+    print(dummyClass.filter_results_by_origin(similar_movies, "American"))
+    print(dummyClass.filter_results_by_year(similar_movies, 1950))
+    past_movie_list = similar_movies
+    print(dummyClass.get_recommendation_by_past_search(past_movie_list))
+    
+    
+
 
 # """
 # startTime = datetime.datetime.now()
