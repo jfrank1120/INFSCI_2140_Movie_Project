@@ -121,7 +121,7 @@ class SearchforMovie():
         self.result = None
         self.result_by_origin = None
         self.result_by_year = None
-        self.engine = db.create_engine('sqlite:///'+ Path.DatabaseDir)
+        self.engine = db.create_engine('sqlite:///'+ Path.DatabaseDir + '?check_same_thread=False')
         self.connection = self.engine.connect()
         metadata = db.MetaData()
         # self.table = db.select([table])

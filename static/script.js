@@ -126,13 +126,22 @@ function get_similar(movie_title) {
     movie_json = {
         'movie_title' : movie_title
     }
-    window.location.href = "movies_similar.html"
-    sendJsonRequest(movie_json, '/get_similar', populate_similar)
+    sendJsonRequest(movie_json, '/get_similar', send_to_page)
+}
+
+function send_to_page(results_list) {
+    window.location.href = 'movies_similar.html'
+}
+
+// cheeky way to get the data from the session
+function get_res_sim_data() {
+    sendJsonRequest(fake_son, '/get_similar_results', populate_similar)
 }
 
 function populate_similar(results_data) {
+    console.log('here')
     console.log(results_data)
-    var results_area = document.getElementById('results_disp')
+    var results_area = document.getElementById('similar_results')
     for (var i = 0; i < results_data.length; i++) {
         // Create the list that shows the results
         var res = document.createElement("div");
