@@ -122,3 +122,12 @@ footer{
     font-weight: bold;
     font-size: 100%;
 }
+
+#movie_title_row {
+    margin-top: 5%;
+}
+
+.nav_sel {
+    margin-top: 5%;
+    font-color: black;
+}

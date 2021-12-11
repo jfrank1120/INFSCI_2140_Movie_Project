@@ -97,7 +97,7 @@ function search() {
     console.log('Searching for : ' + query)
     var json_data = {
                        'query' : query,
-                       'filters' : filters
+                       'filters' : JSON.stringify(filters)
     };
     sendJsonRequest(json_data, '/search', populate_results)
 }
@@ -110,9 +110,38 @@ function populate_results(results_data) {
         var res = document.createElement("div");
         res.className = "result";
         var res_text = document.createElement("H5");
+        var title_ex = results_data[i].replace(',', ':')
+        res_text.setAttribute("onclick", "get_similar('" + title_ex + "');")
         //var title = results_data[i].split(',')
         //title = title[1].substring(1)
+        res_text.innerText = title_ex;
+        res.appendChild(res_text);
+        results_area.appendChild(res);
+    }
+    console.log('APPENDED ALL RESULTS')
+}
+
+function get_similar(movie_title) {
+    console.log('Getting similar: ' + movie_title)
+    movie_json = {
+        'movie_title' : movie_title
+    }
+    window.location.href = "movies_similar.html"
+    sendJsonRequest(movie_json, '/get_similar', populate_similar)
+}
+
+function populate_similar(results_data) {
+    console.log(results_data)
+    var results_area = document.getElementById('results_disp')
+    for (var i = 0; i < results_data.length; i++) {
+        // Create the list that shows the results
+        var res = document.createElement("div");
+        res.className = "result";
+        var res_text = document.createElement("H5");
         var title_ex = results_data[i].replace(',', ':')
+        res_text.setAttribute("onclick", "get_similar('" + title_ex + "');")
+        //var title = results_data[i].split(',')
+        //title = title[1].substring(1)
         res_text.innerText = title_ex;
         res.appendChild(res_text);
         results_area.appendChild(res);
