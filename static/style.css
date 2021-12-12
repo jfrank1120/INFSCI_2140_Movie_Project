@@ -102,7 +102,8 @@ footer{
  }
 
 .filter_btn {
-    padding: 5%;
+    padding-left: 8%;
+    padding-top: 2%;
 }
 
 .upper_page {
@@ -130,4 +131,10 @@ footer{
 .nav_sel {
     margin-top: 5%;
     font-color: black;
+}
+
+.button_area {
+    height: 500px;
+    width: 100%;
+    overflow-y: scroll;
 }

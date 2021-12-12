@@ -105,20 +105,32 @@ function search() {
 function populate_results(results_data) {
     console.log(results_data)
     var results_area = document.getElementById('results_disp')
-    for (var i = 0; i < results_data.length; i++) {
-        // Create the list that shows the results
+    // Clear all children on new search
+    while (results_area.firstChild) {
+        results_area.removeChild(results_area.firstChild)
+    }
+    if (results_data.length == 0) {
         var res = document.createElement("div");
         res.className = "result";
         var res_text = document.createElement("H5");
-        var title_ex = results_data[i].replace(',', ':')
-        res_text.setAttribute("onclick", "get_similar('" + title_ex + "');")
-        //var title = results_data[i].split(',')
-        //title = title[1].substring(1)
-        res_text.innerText = title_ex;
+        res_text.innerText = "No Results Found";
         res.appendChild(res_text);
         results_area.appendChild(res);
+    } else {
+        for (var i = 0; i < results_data.length; i++) {
+            // Create the list that shows the results
+            var res = document.createElement("div");
+            res.className = "result";
+            var res_text = document.createElement("H5");
+            var title_ex = results_data[i].replace(',', ':')
+            res_text.setAttribute("onclick", "get_similar('" + title_ex + "');")
+            //var title = results_data[i].split(',')
+            //title = title[1].substring(1)
+            res_text.innerText = title_ex;
+            res.appendChild(res_text);
+            results_area.appendChild(res);
+        }
     }
-    console.log('APPENDED ALL RESULTS')
 }
 
 function get_similar(movie_title) {
@@ -139,18 +151,19 @@ function get_res_sim_data() {
 }
 
 function populate_similar(results_data) {
-    console.log('here')
     console.log(results_data)
+    var movie_title_text = document.getElementById('selected_movie');
+    movie_title_text.innerText = 'Movies Similar to: ' + results_data['movie_title']
+    results_data = results_data['similar_results']
     var results_area = document.getElementById('similar_results')
     for (var i = 0; i < results_data.length; i++) {
         // Create the list that shows the results
         var res = document.createElement("div");
         res.className = "result";
+        res.className = "d-flex"
         var res_text = document.createElement("H5");
         var title_ex = results_data[i].replace(',', ':')
         res_text.setAttribute("onclick", "get_similar('" + title_ex + "');")
-        //var title = results_data[i].split(',')
-        //title = title[1].substring(1)
         res_text.innerText = title_ex;
         res.appendChild(res_text);
         results_area.appendChild(res);
