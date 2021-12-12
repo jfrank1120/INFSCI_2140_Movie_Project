@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Similar Movies</title>
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width-device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <title>Recommendations</title>
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
-</head>
-<body class="container" onload="get_res_sim_data()">
+  </head>
+<body class="container" onload="get_recs()">
     <div class="row nav_row">
         <div class="col">
             <img src="assets/logo.jpg" alt="logo">
@@ -26,14 +26,14 @@
     </div>
     <div class="row" id="movie_title_row">
         <div class="col d-flex justify-content-center">
-            <h2 id="selected_movie">  </h2>
+            <h2> Recommendations Based on Previous Searches </h2>
         </div>
     </div>
     <div class="row">
         <div class="col-8 d-flex justify-content-center">
 			<div class="flex-column justify-content-center">
 				<br/>
-				<div class="results_area" id="similar_results">
+				<div class="results_area" id="rec_results">
 
 				</div>
 			</div>

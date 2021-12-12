@@ -25,6 +25,14 @@ def query():
     filters = flask.request.form['filters']
     # Check for a year filter
     #year = flask.request.form['year']
+    # Add searh to list of previous searches
+    try:
+        if not session['prev_searches'].__contains__(search_query):
+            session['prev_searches'] = session['prev_searches'] + [search_query]
+    except:
+        session['prev_searches'] = [search_query]
+
+    print(session['prev_searches'])
     filter_dict = demjson.decode(filters)
     dummyClass.set_query(search_query)
     result = dummyClass.retrieve(topK=10)
@@ -45,6 +53,10 @@ def get_similar():
     print(similar_results)
     session['similar_results'] = similar_results
     session['curr_sim_movie'] = movie_title
+    try:
+        session['searched_movies'] = session['searched_movies'] + [movie_title]
+    except:
+        session['searched_movies'] = [movie_title]
     return Response(json.dumps(similar_results), mimetype='application/json')
 
 @app.route('/get_similar_results', methods=["POST"])
@@ -60,6 +72,17 @@ def get_similar_results():
 def populate_user_data():
     # TODO - Pull data from the file with user data and send to the front end
     print('Getting user data')
+
+@app.route('/get_recs', methods=['POST'])
+def get_recs():
+    results = []
+    try:
+        if len(session['searched_movies']) != 0:
+            results = dummyClass.get_recommendation_by_past_search(session['searched_movies'])
+    except:
+        results = []
+    return Response(json.dumps(results), mimetype='application/json')
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
