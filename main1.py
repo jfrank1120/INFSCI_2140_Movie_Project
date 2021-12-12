@@ -24,7 +24,7 @@ def query():
     # Pull filters from front-end
     filters = flask.request.form['filters']
     # Check for a year filter
-    #year = flask.request.form['year']
+    year = flask.request.form['year']
     # Add searh to list of previous searches
     try:
         if not session['prev_searches'].__contains__(search_query):
@@ -41,8 +41,11 @@ def query():
         if value:
             print('filtering on: ' + key)
             origin_filter = filter_search_class.filter_results_by_origin(result, key)
+    year_filter = origin_filter
+    if not len(year) == 0:
+        year_filter = dummyClass.filter_results_by_year(origin_filter, year)
 
-    return Response(json.dumps(origin_filter), mimetype='application/json')
+    return Response(json.dumps(year_filter), mimetype='application/json')
 
 
 @app.route('/get_similar', methods=['POST'])

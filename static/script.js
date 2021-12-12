@@ -88,6 +88,11 @@ function fake_callback() {}
 function search() {
     var query = document.getElementById('query_field').value;
     var buttons = document.getElementsByTagName('input');
+    var year_data = validate_year()
+    if (year_data.length == 0) {
+        var year_field = document.getElementById("year")
+        year_field.value = ""
+    }
     var filters = {};
     for (var ind = 0; ind < buttons.length; ind++) {
         if (buttons[ind].type == "checkbox") {
@@ -97,7 +102,8 @@ function search() {
     console.log('Searching for : ' + query)
     var json_data = {
                        'query' : query,
-                       'filters' : JSON.stringify(filters)
+                       'filters' : JSON.stringify(filters),
+                       'year': year_data
     };
     sendJsonRequest(json_data, '/search', populate_results)
 }
@@ -203,16 +209,15 @@ function validate_year() {
 	var year = document.getElementById("year").value;
 	//year validation
 	if (year==""){
-		alert("Year is Missing!");
-		return false;
+		return "";
 	}
 	else if((year.length<4) || (year.length>4)) {
-        alert("Year must contain 4 Numbers!");
-        return false;
+        return "";
 	}
 	else if (isNaN(year)) {
-        alert("Year must be in numeric form!");
-        return false;
+        return "";
+	} else if (parseInt(year) > 1901 && parseInt(year) < 2017) {
+	    return year;
 	}
 }
 
