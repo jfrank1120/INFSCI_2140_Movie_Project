@@ -166,18 +166,20 @@ class SearchforMovie():
         topK : integer, number of movie names to retrieve
         query : If self.query is None, use this query
         """
+        startTime = datetime.datetime.now()
         movie_list = []
         if self.query == None:
             self.query = self.set_query(query)
         result = self.search.retrieveQuery(self.query, topK)
         for k in result:
             movie_list.append(k.getDocTitle())
-        
+        endTime = datetime.datetime.now()
+        elapsed_time = endTime - startTime
         self.result = result
         # self._create_results_by_origin()
         # self._create_results_by_year()
         
-        return movie_list
+        return [movie_list, elapsed_time]
     
     def get_similar(self, moviename):
         # movie_list = self.retrieve(20, query=moviename)

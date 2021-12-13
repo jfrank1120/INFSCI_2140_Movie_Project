@@ -35,7 +35,8 @@ def query():
     print(session['prev_searches'])
     filter_dict = demjson.decode(filters)
     dummyClass.set_query(search_query)
-    result = dummyClass.retrieve(topK=10)
+    result_arr = dummyClass.retrieve(topK=10)
+    result = result_arr[0]
     origin_filter = result
     for key, value in filter_dict.items():
         if value:
@@ -44,8 +45,11 @@ def query():
     year_filter = origin_filter
     if not len(year) == 0:
         year_filter = dummyClass.filter_results_by_year(origin_filter, year)
-
-    return Response(json.dumps(year_filter), mimetype='application/json')
+    json_ret = {
+        'results': year_filter,
+        'elapsed_time': str(result_arr[1])
+    }
+    return Response(json.dumps(json_ret), mimetype='application/json')
 
 
 @app.route('/get_similar', methods=['POST'])

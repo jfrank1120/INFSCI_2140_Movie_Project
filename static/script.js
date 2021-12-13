@@ -108,8 +108,12 @@ function search() {
     sendJsonRequest(json_data, '/search', populate_results)
 }
 
-function populate_results(results_data) {
-    console.log(results_data)
+function populate_results(ret_data) {
+    console.log(ret_data)
+    results_data = ret_data['results']
+    var time_disp = document.getElementById('search_time')
+    time_disp.innerText = 'Elapsed Time: ' + ret_data['elapsed_time'] + ' sec'
+    console.log('SET TIME')
     var results_area = document.getElementById('results_disp')
     // Clear all children on new search
     while (results_area.firstChild) {
