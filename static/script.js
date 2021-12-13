@@ -81,7 +81,9 @@ function getData(targetUrl, callbackFunction) {
 }
 
 var fake_son = {}
-function fake_callback() {}
+function fake_callback(data_sent) {
+    console.log(data_sent)
+}
 
 // OTHER JAVASCRIPT CODE
 
@@ -207,6 +209,10 @@ function populate_recs(results_data) {
         res.appendChild(res_text);
         results_area.appendChild(res);
     }
+}
+
+function clear_user_data() {
+    sendJsonRequest(fake_son, '/clear_user_data', fake_callback)
 }
 
 function validate_year() {

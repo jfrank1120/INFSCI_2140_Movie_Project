@@ -220,7 +220,7 @@ class SearchforMovie():
         titles = [k.getDocTitle() for k in self.search.retrieveQuery(query, DEFAULT_NUM_MOVIES)]
         return titles
 
-        
+
 
 if __name__ == "__main__":
     dummyClass = SearchforMovie()

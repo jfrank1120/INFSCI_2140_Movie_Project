@@ -17,6 +17,7 @@ filter_search_class = SearchforMovie()
 def root():
     return redirect("/static/index.html", code=302)
 
+
 @app.route('/search', methods=['POST'])
 def query():
     # Pull query from front-end
@@ -66,6 +67,7 @@ def get_similar():
         session['searched_movies'] = [movie_title]
     return Response(json.dumps(similar_results), mimetype='application/json')
 
+
 @app.route('/get_similar_results', methods=["POST"])
 def get_similar_results():
     print(session['similar_results'])
@@ -75,10 +77,12 @@ def get_similar_results():
     }
     return Response(json.dumps(sim_json), mimetype='application/json')
 
+
 @app.route('/populate_user_data', methods=['POST'])
 def populate_user_data():
     # TODO - Pull data from the file with user data and send to the front end
     print('Getting user data')
+
 
 @app.route('/get_recs', methods=['POST'])
 def get_recs():
@@ -89,6 +93,22 @@ def get_recs():
     except:
         results = []
     return Response(json.dumps(results), mimetype='application/json')
+
+
+@app.route('/clear_user_data', methods=['POST'])
+def clear_user_data():
+    session['similar_results'] = []
+    session['prev_searches'] = []
+    session['curr_sim_movie'] = ""
+    session['searched_movies'] = []
+
+    user_data = {
+        'sim_results': session['similar_results'],
+        'prev_searches': session['prev_searches'],
+        'curr_sim_movie': session['curr_sim_movie'],
+        'searched_movies': session['searched_movies']
+    }
+    return Response(json.dumps(user_data), mimetype='application/json')
 
 
 if __name__ == '__main__':
